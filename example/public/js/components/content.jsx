@@ -14,6 +14,10 @@ var Content = React.createClass({
   },
 
   render: function() {
+    if (typeof window !== 'undefined') {
+       
+        console.log(window)
+    }
     return (
       <div>
         <ul>
@@ -27,6 +31,8 @@ var Content = React.createClass({
   },
 
   add: function (content) {
+    alert(content);
+
     this.setState({
       list: this.state.list.concat(content)
     });
@@ -34,6 +40,7 @@ var Content = React.createClass({
 
   remove: function (index) {
     console.log(index, this.state.list)
+    // window.location.href = "http://3c.tmall.com"
     this.state.list.splice(index, 1);
     this.setState({
       list: this.state.list

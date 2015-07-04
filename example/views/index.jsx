@@ -15,12 +15,12 @@ var index = React.createClass({
     var dataScript = `window.__list__ = '${escapeHtml(JSON.stringify(this.props.list))}';`;
     // render as a dynamic react component
     var contentString = React.renderToString(<Content list={this.props.list} />);
-
     return (
       <Layout title={this.props.title}>
         <h1>{this.props.title}</h1>
         <div id="content" dangerouslySetInnerHTML={{__html: contentString}}>
         </div>
+        <div id="clientContent"></div>
         <script dangerouslySetInnerHTML={{__html: dataScript}}></script>
       </Layout>
     );

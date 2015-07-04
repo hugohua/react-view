@@ -36,7 +36,8 @@ app.use(function* () {
     title: 'List',
     list: [
       'hello koa',
-      'hello react'
+      'hello react',
+      'hello hugo'
     ]
   });
 });
