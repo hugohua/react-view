@@ -13,13 +13,27 @@ var Content = React.createClass({
     };
   },
 
+  componentDidUpdate : function(){
+      var totalTime = Date.now() - this.startTime;
+      console.log('client side completed in ' + totalTime + 'ms!');
+      console.log('Re-rendering on client completed');
+  },
+
+  handleRender : function(){
+      this.startTime = Date.now();
+      this.setState({
+          list : ['ddd','ccc']
+      })
+  },
+
   render: function() {
-    if (typeof window !== 'undefined') {
+    // if (typeof window !== 'undefined') {
        
-        console.log(window)
-    }
+    //     console.log(window)
+    // }
     return (
       <div>
+        <div><button type="button" onClick={this.handleRender}>Render</button></div>
         <ul>
           {this.state.list.map((content, index) => {
             return <Item content={content} key={index} remove={this.remove.bind(this, index)} />;

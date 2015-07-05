@@ -52,39 +52,47 @@
 	var React = __webpack_require__(4);
 
 	function initApp() {
-	  var container = document.getElementById('content');
+	  var container = document.getElementById('clientContent');
 	  var list = unescapeHtml(window.__list__);
 	  list = JSON.parse(list);
 	  // list = {};
 	  // reuse server side render result
+	  var startTime = Date.now();
 	  React.render(React.createElement(Content, { list: list }), container);
 
+	  var totalTime = Date.now() - startTime;
+	  console.log('client side completed in ' + totalTime + 'ms!');
+	  // console.log('Re-rendering on client completed');
+
 	  // client side render
-	  var clientContent = document.getElementById('clientContent');
+	  //   var clientContent = document.getElementById('clientContent');
 
-	  var MockData = [{
-	    img: 'http://gtms02.alicdn.com/tps/i2/TB1hbkyHpXXXXboXXXXcy0wIpXX-70-70.png',
-	    text: '手机圈儿',
-	    link: 'http://3c.m.tmall.com'
-	  }, {
-	    img: 'http://gtms01.alicdn.com/tps/i1/TB13zsxHpXXXXX8XpXXcy0wIpXX-70-70.png',
-	    text: '发现好玩',
-	    link: 'http://3c.m.tmall.com'
-	  }, {
-	    img: 'http://gtms01.alicdn.com/tps/i1/TB1wpUtHpXXXXb1XVXXcy0wIpXX-70-70.png',
-	    text: '我爱我家',
-	    link: 'http://3c.m.tmall.com'
-	  }, {
-	    img: 'http://gtms03.alicdn.com/tps/i3/TB14NwyHpXXXXaUXXXXcy0wIpXX-70-70.png',
-	    text: '生活圈儿',
-	    link: 'http://3c.m.tmall.com'
-	  }, {
-	    img: 'http://gtms04.alicdn.com/tps/i4/TB1ODktHpXXXXXZXVXXcy0wIpXX-70-70.png',
-	    text: '试用中心',
-	    link: 'http://3c.m.tmall.com'
-	  }];
+	  //   var MockData = [{
+	  //   img : 'http://gtms02.alicdn.com/tps/i2/TB1hbkyHpXXXXboXXXXcy0wIpXX-70-70.png',
+	  //   text : '手机圈儿',
+	  //   link : 'http://3c.m.tmall.com'                     
+	  // },{
+	  //   img : 'http://gtms01.alicdn.com/tps/i1/TB13zsxHpXXXXX8XpXXcy0wIpXX-70-70.png',
+	  //   text : '发现好玩',
+	  //   link : 'http://3c.m.tmall.com'                     
+	  // },{
+	  //   img : 'http://gtms01.alicdn.com/tps/i1/TB1wpUtHpXXXXb1XVXXcy0wIpXX-70-70.png',
+	  //   text : '我爱我家',
+	  //   link : 'http://3c.m.tmall.com'                     
+	  // },{
+	  //   img : 'http://gtms03.alicdn.com/tps/i3/TB14NwyHpXXXXaUXXXXcy0wIpXX-70-70.png',
+	  //   text : '生活圈儿',
+	  //   link : 'http://3c.m.tmall.com'                     
+	  // },{
+	  //   img : 'http://gtms04.alicdn.com/tps/i4/TB1ODktHpXXXXXZXVXXcy0wIpXX-70-70.png',
+	  //   text : '试用中心',
+	  //   link : 'http://3c.m.tmall.com'                     
+	  // }];
 
-	  React.render(React.createElement(Column, { dataSource: MockData }), clientContent);
+	  // 	React.render(
+	  // 		<Column dataSource={MockData} />,
+	  // 		clientContent
+	  // 	)
 	}
 
 	initApp();
@@ -110,11 +118,25 @@
 	    };
 	  },
 
+	  componentDidUpdate: function componentDidUpdate() {
+	    var totalTime = Date.now() - this.startTime;
+	    console.log('client side completed in ' + totalTime + 'ms!');
+	    console.log('Re-rendering on client completed');
+	  },
+
+	  handleRender: function handleRender() {
+	    this.startTime = Date.now();
+	    this.setState({
+	      list: ['ddd', 'ccc']
+	    });
+	  },
+
 	  render: function render() {
-	    if (window && window.location) {
-	      console.log(111);
-	    }
-	    return React.createElement('div', null, React.createElement('ul', null, this.state.list.map((function (content, index) {
+	    // if (typeof window !== 'undefined') {
+
+	    //     console.log(window)
+	    // }
+	    return React.createElement('div', null, React.createElement('div', null, React.createElement('button', { type: 'button', onClick: this.handleRender }, 'Render')), React.createElement('ul', null, this.state.list.map((function (content, index) {
 	      return React.createElement(Item, { content: content, key: index, remove: this.remove.bind(this, index) });
 	    }).bind(this))), React.createElement(Create, { add: this.add }));
 	  },

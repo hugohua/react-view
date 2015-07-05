@@ -62,7 +62,8 @@ module.exports = function (app, _options) {
     // merge koa state
     merge(locals, this.state || {});
     merge(locals, _locals);
-
+    // perf start
+    var startTime = Date.now();
     var markup = options.doctype || '';
     try {
       var component = require(filepath);
@@ -92,6 +93,9 @@ module.exports = function (app, _options) {
       this.body = markup;
     }
 
+    var totalTime = Date.now() - startTime;
+    console.log('server side completed in ' + totalTime + 'ms!');
+    // console.log(markup)
     return markup;
   };
 };
