@@ -1,6 +1,31 @@
+var React = require('react');
 var Create = require('./create');
 var Item = require('./item');
-var React = require('react');
+var View = require('./View');
+var Text = require('./Text');
+var MockData = require('../../data/mock.js');
+
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+// console.log(MockData,'mock')
 
 var Content = React.createClass({
   propTypes: {
@@ -20,9 +45,11 @@ var Content = React.createClass({
   },
 
   handleRender : function(){
+      var newData = shuffle(MockData.data);
+      console.log(newData);
       this.startTime = Date.now();
       this.setState({
-          list : ['ddd','ccc']
+          list : newData
       })
   },
 
@@ -32,15 +59,19 @@ var Content = React.createClass({
     //     console.log(window)
     // }
     return (
-      <div>
-        <div><button type="button" onClick={this.handleRender}>Render</button></div>
-        <ul>
-          {this.state.list.map((content, index) => {
-            return <Item content={content} key={index} remove={this.remove.bind(this, index)} />;
+      <View>
+        <View><button type="button" onClick={this.handleRender}>Render</button></View>
+        <View>
+          {this.state.list.map((item, index) => {
+            return (
+              <View>
+              <Item tit={item.tit} price={item.price} key={index} remove={this.remove.bind(this, index)} />
+              </View>
+            );
           })}
-        </ul>
+        </View>
         <Create add={this.add} />
-      </div>
+      </View>
     );
   },
 

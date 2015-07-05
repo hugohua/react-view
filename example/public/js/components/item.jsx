@@ -1,18 +1,21 @@
 var React = require('react');
+var View = require('./View');
+var Text = require('./Text');
 
 var Item = React.createClass({
 
   propTypes: {
     remove: React.PropTypes.func,
-    content: React.PropTypes.string
+    tit: React.PropTypes.string
   },
 
   render: function() {
     return(
-      <li>
-        <span className="item">{this.props.content}</span>
-        <span className="remove" onClick={this.props.remove}>x</span>
-      </li>
+      <View>
+        <Text className="item">Title: {this.props.tit}</Text>
+        <Text>Price: {this.props.price}</Text>
+        <Text className="remove" onClick={this.props.remove}>x</Text>
+      </View>
     );
   }
 });

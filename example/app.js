@@ -13,6 +13,7 @@ var staticCache = require('koa-static-cache');
 var react = require('..');
 var path = require('path');
 var koa = require('koa');
+var MockData = require('./public/data/mock.js');
 
 var app = koa();
 
@@ -31,14 +32,12 @@ react(app, {
 
 app.use(staticCache(assetspath));
 
+// console.log(MockData)
+
 app.use(function* () {
   this.render('index', {
     title: 'List',
-    list: [
-      'hello koa',
-      'hello react',
-      'hello hugo'
-    ]
+    list: MockData.data
   });
 });
 
